@@ -8,5 +8,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "htmlhint": "^1.9.2",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard": "^39.0.1"
+  }
 }
