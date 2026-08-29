@@ -1,8 +1,12 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/src/index.html" },
-    { "source": "/about", "destination": "/src/about.html" },
-    { "source": "/projects", "destination": "/src/projects.html" },
-    { "source": "/contact", "destination": "/src/contact.html" }
+  "routes": [
+    { "src": "/", "dest": "/src/index.html" },
+    { "src": "/about", "dest": "/src/about.html" },
+    { "src": "/about.html", "dest": "/src/about.html" },
+    { "src": "/projects", "dest": "/src/projects.html" },
+    { "src": "/projects.html", "dest": "/src/projects.html" },
+    { "src": "/contact", "dest": "/src/contact.html" },
+    { "src": "/contact.html", "dest": "/src/contact.html" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
