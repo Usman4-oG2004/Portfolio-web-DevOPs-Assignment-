@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROI Calculator - Usman Amer</title>
+  <link rel="stylesheet" href="../styles/projects.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Usman<span>.</span></a>
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="projects.html" class="active">ROI Calculator</a></li>
+        <li><a href="contact.html">Contact Me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="hero-content">
+      <h1>Business ROI Calculator</h1>
+      <p>Enter your investment amount and select acquisition channels to see your estimated revenue output.</p>
+    </div>
+  </header>
+
+  <section class="calculator-section">
+    <div class="container">
+      <div class="calculator-card">
+        <div class="input-group">
+          <label for="investment">Investment Amount (USD)</label>
+          <input type="number" id="investment" placeholder="e.g. 1000" min="0">
+        </div>
+
+        <div class="channels-group">
+          <p class="channels-label">Select Acquisition Channels</p>
+          <div class="channels-grid">
+            <div class="channel-item">
+              <input type="checkbox" id="linkedin" value="linkedin">
+              <label for="linkedin">
+                <span class="channel-icon">💼</span>
+                <span class="channel-name">LinkedIn</span>
+                <span class="channel-roi">3x ROI</span>
+              </label>
+            </div>
+            <div class="channel-item">
+              <input type="checkbox" id="cold-email" value="cold-email">
+              <label for="cold-email">
+                <span class="channel-icon">📧</span>
+                <span class="channel-name">Cold Emailing</span>
+                <span class="channel-roi">2.5x ROI</span>
+              </label>
+            </div>
+            <div class="channel-item">
+              <input type="checkbox" id="cold-calling" value="cold-calling">
+              <label for="cold-calling">
+                <span class="channel-icon">📞</span>
+                <span class="channel-name">Cold Calling</span>
+                <span class="channel-roi">2x ROI</span>
+              </label>
+            </div>
+            <div class="channel-item">
+              <input type="checkbox" id="upwork" value="upwork">
+              <label for="upwork">
+                <span class="channel-icon">🔧</span>
+                <span class="channel-name">Upwork</span>
+                <span class="channel-roi">4x ROI</span>
+              </label>
+            </div>
+            <div class="channel-item">
+              <input type="checkbox" id="fiverr" value="fiverr">
+              <label for="fiverr">
+                <span class="channel-icon">⭐</span>
+                <span class="channel-name">Fiverr</span>
+                <span class="channel-roi">3.5x ROI</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateROI()">Calculate My ROI</button>
+      </div>
+
+      <div class="results-card" id="results">
+        <h2>Your Estimated Output</h2>
+        <div class="results-grid" id="results-grid"></div>
+        <div class="total-box" id="total-box"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Usman Amer. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function calculateROI() {
+      var investment = parseFloat(document.getElementById("investment").value);
+      var channels = {
+        linkedin: { label: "LinkedIn", roi: 3, icon: "💼" },
+        "cold-email": { label: "Cold Emailing", roi: 2.5, icon: "📧" },
+        "cold-calling": { label: "Cold Calling", roi: 2, icon: "📞" },
+        upwork: { label: "Upwork", roi: 4, icon: "🔧" },
+        fiverr: { label: "Fiverr", roi: 3.5, icon: "⭐" }
+      };
+
+      if (!investment || investment <= 0) {
+        alert("Please enter a valid investment amount.");
+        return;
+      }
+
+      var selected = [];
+      var keys = Object.keys(channels);
+      for (var i = 0; i < keys.length; i++) {
+        var checkbox = document.getElementById(keys[i]);
+        if (checkbox && checkbox.checked) {
+          selected.push(keys[i]);
+        }
+      }
+
+      if (selected.length === 0) {
+        alert("Please select at least one acquisition channel.");
+        return;
+      }
+
+      var perChannel = investment / selected.length;
+      var totalOutput = 0;
+      var gridHtml = "";
+
+      for (var j = 0; j < selected.length; j++) {
+        var ch = channels[selected[j]];
+        var output = perChannel * ch.roi;
+        totalOutput += output;
+        gridHtml += "<div class=\"result-item\">";
+        gridHtml += "<span class=\"result-icon\">" + ch.icon + "</span>";
+        gridHtml += "<div class=\"result-info\">";
+        gridHtml += "<h3>" + ch.label + "</h3>";
+        gridHtml += "<p>Invested: $" + perChannel.toFixed(2) + "</p>";
+        gridHtml += "<p class=\"result-output\">Output: $" + output.toFixed(2) + "</p>";
+        gridHtml += "</div></div>";
+      }
+
+      document.getElementById("results-grid").innerHTML = gridHtml;
+      document.getElementById("total-box").innerHTML =
+        "<h3>Total Estimated Revenue</h3><p class=\"total-amount\">$" + totalOutput.toFixed(2) + "</p><p class=\"total-sub\">Based on $" + investment.toFixed(2) + " invested across " + selected.length + " channel(s)</p>";
+      document.getElementById("results").style.display = "block";
+    }
+  </script>
+</body>
+</html>
